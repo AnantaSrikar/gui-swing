@@ -15,7 +15,7 @@ public class Main
 {
     public static void main(String args[])
     {
-        Readme readme = new Readme();
+        new HomePage();
     }
 }
 
@@ -77,9 +77,16 @@ class HomePage implements ActionListener//home page frame generator class
             if(ae.getSource() == market)
                 System.out.println("market button");
             else if(ae.getSource() == readme)
-                System.out.println("readme");
+            {
+                System.out.println("readme button");
+                homepage.setVisible(false);
+                new Readme();
+            }
             else if(ae.getSource() == source)
+            {
+                System.out.println("source code button");
                 openWebpage("https://github.com/pop-and-block");
+            }
         }
         catch (Exception e)
         {
@@ -100,7 +107,7 @@ class HomePage implements ActionListener//home page frame generator class
     }
 }
 
-class Readme
+class Readme extends HomePage implements ActionListener
 {
     JFrame readme;
     ImageIcon frameIcon;
@@ -110,17 +117,16 @@ class Readme
     Readme()
     {
         readme = new JFrame("Pop and Block");
-
-        frameIcon = new ImageIcon("../assets/icon.png");
-        
+        frameIcon = new ImageIcon("../assets/icon.png");        
         back = new JButton("back");//respective buttons with the titles
-
         readmetext = new JLabel();
 
-        back.setBounds(10,10,120,40);
+        back.setBounds(10,10,120,40);//top left button
+        back.addActionListener(this);
         
         readmetext.setText("<html><font size = 5>So hewe's how it wowks.The wowwd has a shit ton of cabwes. They'we aww undew the ocean ow on wand ow undew wand. Those cabwes cawwy peta-fucking-bytes of infowmation evewy singwe second. That's being shawed by you, the giww you have a cwush on but don't have the bawws to say you wike hew and hew cwush. When you say you'we paying fow a connection, you'we paying fow a tiny tap into the wesouwce that 10s of thousands of ewectwicaw, ewectwonics, computew science engineews and evewyone ewse have wowked on theiw entiwe wives. They devewoped awgowithms which you won't be capabwe of even undewstanding unwess you sit down fow houws. They evowved softwawe and hawdwawe and pushed technowogy to the wimits which you won't even know about. They wowked theiw asses off so you couwd type desi pown on pownhub and nut in 12 seconds. That wesouwce is shawed. Just because you pay fow it, doesn't mean it's youws to abuse. Keep the gwobaw twaffic wow.</font></html>");
-        readmetext.setBounds(0,70,690,790);
+        //html formatted text
+        readmetext.setBounds(0,70,690,790);//left half of screen
         readmetext.setHorizontalAlignment(JLabel.LEFT);
         readmetext.setVerticalAlignment(JLabel.TOP);
         
@@ -135,5 +141,21 @@ class Readme
         readme.setLocationRelativeTo(null);//center the jframe wrt screen
         readme.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //close the page on pressing the close button terminates the program if its the only window
+    }
+
+    public void actionPerformed(ActionEvent ae)
+    {
+        try
+        {
+            if(ae.getSource() == back)
+            {
+                readme.setVisible(false);
+                homepage.setVisible(true);
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
