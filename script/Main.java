@@ -3,6 +3,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Desktop;
+import java.net.URL;
 
 
 public class Main
@@ -13,7 +17,7 @@ public class Main
     }
 }
 
-class HomePage//home page frame generator class
+class HomePage implements ActionListener//home page frame generator class
 {
     HomePage()
     {
@@ -38,6 +42,8 @@ class HomePage//home page frame generator class
         source.setBounds(670,540,120,40);//and quarters of frame length
         market.setBounds(1015,540,120,40);
 
+        source.addActionListener(this);//action listener for source button
+
         homepage.add(readme);//adding buttons
         homepage.add(source);
         homepage.add(market);
@@ -51,5 +57,22 @@ class HomePage//home page frame generator class
         homepage.setLocationRelativeTo(null);//center the jframe wrt screen
         homepage.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //close the page on pressing the close button terminates the program if its the only window
+    }
+
+    public void actionPerformed(ActionEvent ae)//overriden actionperformed
+    {
+        openWebpage("https://github.com/pop-and-block");
+    }
+
+    public static void openWebpage(String urlString) 
+    {
+        try
+        {
+            Desktop.getDesktop().browse(new URL(urlString).toURI());//opens urlString in computer's default browser
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
