@@ -79,8 +79,8 @@ class HomePage implements ActionListener//home page frame generator class
             else if(ae.getSource() == readme)
             {
                 System.out.println("readme button");
-                homepage.setVisible(false);
                 new Readme();
+                dispose();
             }
             else if(ae.getSource() == source)
             {
@@ -150,7 +150,8 @@ class Readme extends HomePage implements ActionListener
             if(ae.getSource() == back)
             {
                 readme.setVisible(false);
-                homepage.setVisible(true);
+                new HomePage();
+                dispose();
             }
         }
         catch(Exception e)
