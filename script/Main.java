@@ -9,13 +9,11 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.net.URL;
 
-
-
 public class Main
 {
     public static void main(String args[])
     {
-        new HomePage();
+        new HomePage(true);
     }
 }
 
@@ -28,7 +26,12 @@ class HomePage implements ActionListener//home page frame generator class
     JButton source;
     JLabel header;
     Image scaledimage;
+
     HomePage()
+    {
+
+    }
+    HomePage(boolean newFrame)
     {
         homepage = new JFrame("Pop and Block");
 
@@ -79,8 +82,8 @@ class HomePage implements ActionListener//home page frame generator class
             else if(ae.getSource() == readme)
             {
                 System.out.println("readme button");
-                new Readme();
-                dispose();
+                homepage.setVisible(false);//hiding homepage
+                new Readme(homepage);//passing homepage object to Readme class to let it return back to the homepage
             }
             else if(ae.getSource() == source)
             {
@@ -107,15 +110,17 @@ class HomePage implements ActionListener//home page frame generator class
     }
 }
 
-class Readme extends HomePage implements ActionListener
+class Readme implements ActionListener
 {
+    JFrame homepage_r;
     JFrame readme;
     ImageIcon frameIcon;
     JButton back;
     JLabel readmetext;
 
-    Readme()
+    Readme(JFrame homepage)
     {
+        homepage_r = homepage;//original homepage object(JFrame)
         readme = new JFrame("Pop and Block");
         frameIcon = new ImageIcon("../assets/icon.png");        
         back = new JButton("back");//respective buttons with the titles
@@ -149,9 +154,8 @@ class Readme extends HomePage implements ActionListener
         {
             if(ae.getSource() == back)
             {
-                readme.setVisible(false);
-                new HomePage();
-                dispose();
+                homepage_r.setVisible(true);//passed homepage object set back to visible
+                readme.dispose();
             }
         }
         catch(Exception e)
