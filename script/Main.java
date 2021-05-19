@@ -1,19 +1,28 @@
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Desktop;
 import java.awt.Dimension;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.ChartPanel;
+import org.jfree.data.time.Day;  
+import org.jfree.data.time.TimeSeries;  
+import org.jfree.data.time.TimeSeriesCollection;  
+import org.jfree.data.xy.XYDataset;  
 import java.net.URL;
 
 public class Main
 {
     public static void main(String args[])
     {
-        new HomePage(true);
+        new HomePage();
     }
 }
 
@@ -28,10 +37,6 @@ class HomePage implements ActionListener//home page frame generator class
     Image scaledimage;
 
     HomePage()
-    {
-
-    }
-    HomePage(boolean newFrame)
     {
         homepage = new JFrame("Pop and Block");
 
@@ -78,12 +83,16 @@ class HomePage implements ActionListener//home page frame generator class
         try
         {
             if(ae.getSource() == market)
+            {
                 System.out.println("market button");
+                homepage.setVisible(false);//hiding homepage
+                new Market(homepage);//passing homepage object to Readme class to let it return back to the homepage
+            }
             else if(ae.getSource() == readme)
             {
                 System.out.println("readme button");
-                homepage.setVisible(false);//hiding homepage
-                new Readme(homepage);//passing homepage object to Readme class to let it return back to the homepage
+                homepage.setVisible(false);
+                new Readme(homepage);
             }
             else if(ae.getSource() == source)
             {
@@ -144,7 +153,7 @@ class Readme implements ActionListener
         readme.setLayout(null);//no layout manager
         readme.setVisible(true);
         readme.setLocationRelativeTo(null);//center the jframe wrt screen
-        readme.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        readme.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //close the page on pressing the close button terminates the program if its the only window
     }
 
@@ -156,6 +165,155 @@ class Readme implements ActionListener
             {
                 homepage_r.setVisible(true);//passed homepage object set back to visible
                 readme.dispose();
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+}
+
+class Market implements ActionListener
+{
+    JFrame homepage_m;
+    JFrame market;
+    JTabbedPane tab;
+    JPanel btc;XYDataset databtc;JFreeChart chartbtc;ChartPanel chpanelbtc;//panel elements for each coin
+    JPanel doge;XYDataset datadoge;JFreeChart chartdoge;ChartPanel chpaneldoge;
+    JPanel eth;XYDataset dataeth;JFreeChart charteth;ChartPanel chpaneleth;
+    ImageIcon frameIcon;
+    JButton back;
+
+    Market(JFrame homepage)
+    {
+        homepage_m = homepage;//original homepage object(JFrame)
+        market = new JFrame("Pop and Block");
+        frameIcon = new ImageIcon("../assets/icon.png");        
+        back = new JButton("back");//respective buttons with the titles
+
+        tab = new JTabbedPane();
+        
+        btc = new JPanel();
+        btc.setBounds(50,50,1280,740);
+        btc.setLayout(null);
+        databtc = createDataSet("btc");
+        chartbtc = ChartFactory.createTimeSeriesChart("Bitcoin","Timeline","Value",databtc);
+        chpanelbtc = new ChartPanel(chartbtc);
+        chpanelbtc.setBounds(0,0,1280,740);
+        btc.add(chpanelbtc);
+
+        doge = new JPanel();
+        doge.setBounds(0,0,1280,740);
+        doge.setLayout(null);
+        datadoge = createDataSet("doge");
+        chartdoge = ChartFactory.createTimeSeriesChart("Dogecoin","Timeline","Value",datadoge);
+        chpaneldoge = new ChartPanel(chartdoge);
+        chpaneldoge.setBounds(0,0,1280,740);
+        doge.add(chpaneldoge);
+
+        eth = new JPanel();
+        eth.setBounds(0,0,1280,740);
+        eth.setLayout(null);
+        dataeth = createDataSet("eth");
+        charteth = ChartFactory.createTimeSeriesChart("Ethereum","Timeline","Value",dataeth);
+        chpaneleth = new ChartPanel(charteth);
+        chpaneleth.setBounds(0,0,1280,740);
+        eth.add(chpaneleth);        
+        
+        tab.add("btc",btc);
+        tab.add("doge",doge);
+        tab.add("eth",eth);
+        tab.setBounds(50,50,1280,740);
+
+        back.setBounds(10,10,120,40);//top left button
+        back.addActionListener(this);
+                
+        market.add(back);//adding buttons
+        market.add(tab);//adding tabs
+
+        market.setSize(690*2,420*2);
+        market.setIconImage(frameIcon.getImage());
+        market.setLayout(null);//no layout manager
+        market.setVisible(true);
+        market.setLocationRelativeTo(null);//center the jframe wrt screen
+        market.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //close the page on pressing the close button terminates the program if its the only window        
+    }
+
+    public XYDataset createDataSet(String s)
+    {
+        TimeSeriesCollection dataset = new TimeSeriesCollection();
+        TimeSeries series = new TimeSeries(s);
+
+        if(s.equals("btc"))
+        {
+            series.add(new Day(1, 1, 2017), 50);  
+            series.add(new Day(2, 1, 2017), 40);  
+            series.add(new Day(3, 1, 2017), 45);  
+            series.add(new Day(4, 1, 2017), 30);  
+            series.add(new Day(5, 1, 2017), 50);  
+            series.add(new Day(6, 1, 2017), 45);  
+            series.add(new Day(7, 1, 2017), 60);  
+            series.add(new Day(8, 1, 2017), 45);  
+            series.add(new Day(9, 1, 2017), 55);  
+            series.add(new Day(10, 1, 2017), 48);  
+            series.add(new Day(11, 1, 2017), 60);  
+            series.add(new Day(12, 1, 2017), 45);  
+            series.add(new Day(13, 1, 2017), 65);  
+            series.add(new Day(14, 1, 2017), 45);  
+            series.add(new Day(15, 1, 2017), 55);
+        }
+        else if(s.equals("doge"))
+        {
+            series.add(new Day(1, 1, 2017), 50);  
+            series.add(new Day(2, 1, 2017), 40);  
+            series.add(new Day(3, 1, 2017), 45);  
+            series.add(new Day(4, 1, 2017), 30);  
+            series.add(new Day(5, 1, 2017), 50);  
+            series.add(new Day(6, 1, 2017), 45);  
+            series.add(new Day(7, 1, 2017), 60);  
+            series.add(new Day(8, 1, 2017), 45);  
+            series.add(new Day(9, 1, 2017), 55);  
+            series.add(new Day(10, 1, 2017), 48);  
+            series.add(new Day(11, 1, 2017), 60);  
+            series.add(new Day(12, 1, 2017), 45);  
+            series.add(new Day(13, 1, 2017), 65);  
+            series.add(new Day(14, 1, 2017), 45);  
+            series.add(new Day(15, 1, 2017), 55);
+        }
+        else if(s.equals("eth"))
+        {
+            series.add(new Day(1, 1, 2017), 50);  
+            series.add(new Day(2, 1, 2017), 40);  
+            series.add(new Day(3, 1, 2017), 45);  
+            series.add(new Day(4, 1, 2017), 30);  
+            series.add(new Day(5, 1, 2017), 50);  
+            series.add(new Day(6, 1, 2017), 45);  
+            series.add(new Day(7, 1, 2017), 60);  
+            series.add(new Day(8, 1, 2017), 45);  
+            series.add(new Day(9, 1, 2017), 55);  
+            series.add(new Day(10, 1, 2017), 48);  
+            series.add(new Day(11, 1, 2017), 60);  
+            series.add(new Day(12, 1, 2017), 45);  
+            series.add(new Day(13, 1, 2017), 65);  
+            series.add(new Day(14, 1, 2017), 45);  
+            series.add(new Day(15, 1, 2017), 55);
+        }
+
+        dataset.addSeries(series);
+
+        return dataset;
+    }
+
+    public void actionPerformed(ActionEvent ae)
+    {
+        try
+        {
+            if(ae.getSource() == back)
+            {
+                homepage_m.setVisible(true);//passed homepage object set back to visible
+                market.dispose();
             }
         }
         catch(Exception e)
