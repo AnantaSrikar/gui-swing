@@ -9,10 +9,14 @@ Current status:
 	Readme page-
 		.text responsiveness is possible through HTML formatting
 		.back button allows travel back and forth home and readme page
+	Market page-
+		.Pinned tabe panes allowing independent tabs for each cryptocoin
+		.Each tab contains an embedded time series chart with dummy data
+
 TODO:
-	Homepage-
-		.Assign functions to "market"
-		.Figure out frame element responsiveness
+	README page-
+		.format the text with margins and everything
+	Market page-
+		.Incorporate data parsing from json to chart
 	.Make everything prettier
-	.Make a market page for the actual project stuff
 	
