@@ -6,13 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 public class DataSetGen
 {
-    public static XYDataset createDataSet(String s)
+    public static XYDataset createDataSet(String s , String json)
     {
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         TimeSeries series = new TimeSeries(s);
-
-        s = s+"inr";
-        JSONObject data = new JSONObject(APIc.getMarketJSONData());
+        JSONObject data = new JSONObject(json);
         JSONObject coin = data.getJSONObject(s);
         JSONArray time = coin.getJSONArray("time");
         JSONArray value = coin.getJSONArray("value");

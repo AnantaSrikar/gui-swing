@@ -199,9 +199,7 @@ class Market implements ActionListener
     JFrame homepage_m;
     JFrame market;
     JTabbedPane tab;
-    JPanel btc;XYDataset databtc;JFreeChart chartbtc;ChartPanel chpanelbtc;//panel elements for each coin
-    JPanel doge;XYDataset datadoge;JFreeChart chartdoge;ChartPanel chpaneldoge;
-    JPanel eth;XYDataset dataeth;JFreeChart charteth;ChartPanel chpaneleth;
+    JPanel panel;
     ImageIcon frameIcon;
     JButton back;
 
@@ -212,9 +210,6 @@ class Market implements ActionListener
         frameIcon = new ImageIcon("../assets/icon.png");        
         back = new JButton("back");//respective buttons with the titles
         tab = new JTabbedPane();
-        btc = new JPanel();
-        doge = new JPanel();
-        eth = new JPanel();
 
         market.setSize(1280,1024);
         market.setIconImage(frameIcon.getImage());
@@ -227,42 +222,18 @@ class Market implements ActionListener
 
         Rectangle marketDim = market.getBounds();
 
-        tab.add("btc",btc);
-        tab.add("doge",doge);
-        tab.add("eth",eth);
         tab.setBounds(35,70,marketDim.width - 70,marketDim.height - 140);
         Rectangle tabbedpaneDim = tab.getBounds();
-        
-        btc.setBounds(0,0,tabbedpaneDim.width,tabbedpaneDim.height);
-        btc.setLayout(null);
-        databtc = DataSetGen.createDataSet("btc");
-        chartbtc = ChartFactory.createTimeSeriesChart("Bitcoin","Timeline","Value",databtc);
-        chpanelbtc = new ChartPanel(chartbtc);
-        XYPlot plotbtc = (XYPlot)chartbtc.getPlot();
-        plotbtc.setBackgroundPaint(Color.decode("#F2F5A3"));
-        chpanelbtc.setBounds(0,0,tabbedpaneDim.width,tabbedpaneDim.height);
-        btc.add(chpanelbtc);
 
-        doge.setBounds(0,0,tabbedpaneDim.width,tabbedpaneDim.height);
-        doge.setLayout(null);
-        datadoge = DataSetGen.createDataSet("doge");
-        chartdoge = ChartFactory.createTimeSeriesChart("Dogecoin","Timeline","Value",datadoge);
-        chpaneldoge = new ChartPanel(chartdoge);
-        XYPlot plotdoge = (XYPlot)chartdoge.getPlot();
-        plotdoge.setBackgroundPaint(Color.decode("#F2F5A3"));
-        chpaneldoge.setBounds(0,0,tabbedpaneDim.width,tabbedpaneDim.height);
-        doge.add(chpaneldoge);
-
-        eth.setBounds(0,0,tabbedpaneDim.width,tabbedpaneDim.height);
-        eth.setLayout(null);
-        dataeth = DataSetGen.createDataSet("eth");
-        charteth = ChartFactory.createTimeSeriesChart("Ethereum","Timeline","Value",dataeth);
-        chpaneleth = new ChartPanel(charteth);
-        XYPlot ploteth = (XYPlot)charteth.getPlot();
-        ploteth.setBackgroundPaint(Color.decode("#F2F5A3"));
-        chpaneleth.setBounds(0,0,tabbedpaneDim.width,tabbedpaneDim.height);
-        eth.add(chpaneleth);        
-        
+        panel = new JPanel();
+        TabGen obj = new TabGen(); 
+        String json = APIc.getMarketJSONData();
+        JSONArray markets = JSONReader.getJSONarray("res.json");
+        for(int i = 0 ; i < markets.length() ; i++)
+        {
+            panel = obj.tabGenerator(markets.get(i).toString(),tabbedpaneDim,json);
+            tab.add(markets.get(i).toString().substring(0,markets.get(i).toString().length()-3).toUpperCase(),panel);
+        }        
         tab.setBackground(Color.decode("#FFCDAD"));
 
         back.setBounds(10,10,120,40);//top left button
@@ -270,7 +241,7 @@ class Market implements ActionListener
         back.addActionListener(this);
                 
         market.add(back);//adding buttons
-        market.add(tab);//adding tabs    
+        market.add(tab);//adding tabs
     }
 
     public void actionPerformed(ActionEvent ae)
