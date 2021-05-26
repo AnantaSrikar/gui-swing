@@ -13,10 +13,12 @@ Current status:
 		.added support for direct conversion of file plaintext to html format code
 	Market page-
 		.Pinned tabe panes allowing independent tabs for each cryptocoin
-		.Each tab contains an embedded time series chart with dummy data
+		.Backend integration using JSON
+		.Dynamic tab generation
+		.Refresh button added to well, refresh the charts with up-to-date data
 
 TODO:
-	Market page-
-		.Incorporate data parsing from json to chart
 	.Make everything prettier (more)
-	
+	.Implement auto refresh
+	Market page-
+		info boxes for current value and stuff

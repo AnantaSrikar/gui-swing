@@ -7,7 +7,7 @@ public class TimeFormat
     int minute;
     int second;
     
-    public static TimeFormat timeFormatter(String s)
+    public static TimeFormat timeFormatter(String s)//conversion of json time format into object format
     {
         TimeFormat time = new TimeFormat();
         time.year = Integer.parseInt(s.substring(0,4));

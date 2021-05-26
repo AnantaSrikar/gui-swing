@@ -245,19 +245,19 @@ class Market implements ActionListener
         market.add(refresh);
     }
 
-    public void generateTabbedPanes()
+    public void generateTabbedPanes()//function to generate charts and tabs for each coin
     {
         panel = new JPanel();
-        TabGen obj = new TabGen(); 
+        TabGen obj = new TabGen();//TabGen class object to access methods
         String json = APIc.getMarketJSONData();
-        JSONArray markets = JSONReader.getJSONarray("res.json");
+        JSONArray markets = JSONReader.getJSONarray("res.json");//array of coins
 
         for(int i = 0 ; i < markets.length() ; i++)
         {
             panel = obj.tabGenerator(markets.get(i).toString(),tabbedpaneDim,json);
-            tab.add(markets.get(i).toString().substring(0,markets.get(i).toString().length()-3).toUpperCase(),panel);
+            tab.add(markets.get(i).toString().substring(0,markets.get(i).toString().length()-3).toUpperCase(),panel);//add tab to panel
         }
-        market.add(tab);
+        market.add(tab);//add tabs to frame
     }
     public void actionPerformed(ActionEvent ae)
     {
@@ -270,11 +270,10 @@ class Market implements ActionListener
             }
             if(ae.getSource() == refresh)
             {
-                tab.removeAll();
-                market.remove(tab);
-                generateTabbedPanes();
-                market.revalidate();
-                market.repaint();
+                tab.removeAll();//removes all tab panels from tab
+                generateTabbedPanes();//refreshes the chart
+                market.revalidate();//layout recreation
+                market.repaint();//layout regeneration
             }
         }
         catch(Exception e)

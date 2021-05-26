@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 public class JSONReader
 {
-    public static JSONArray getJSONarray(String addr)
+    public static JSONArray getJSONarray(String addr)//returns json array from json file
     {
         try
         {
