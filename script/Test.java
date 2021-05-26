@@ -1,8 +1,7 @@
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-public class Test extends JSONStringConversion
+public class Test
 {
     public static void main(String args[])
     {
@@ -11,11 +10,10 @@ public class Test extends JSONStringConversion
     }
     public void run()
     {
-        String s = getJSONString("../data/data.json");
-        JSONObject data = (JSONObject)JSONValue.parse(s);
-        JSONArray coin = (JSONArray)data.get("btc");
-        JSONArray coinx = (JSONArray)coin.get(0);
-        JSONArray coiny = (JSONArray)coin.get(1);
-        System.out.println(coinx.get(0) + "\n" + coiny.get(0));
+        JSONObject data = new JSONObject(APIc.getMarketJSONData());
+        JSONObject coin = data.getJSONObject("dogeinr");
+        JSONArray time = coin.getJSONArray("time");
+        JSONArray value = coin.getJSONArray("value");
+        System.out.println(Double.parseDouble(value.get(1).toString()));
     }
 }

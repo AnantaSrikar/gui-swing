@@ -18,10 +18,12 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.time.Day;  
+import org.jfree.data.time.Second;  
 import org.jfree.data.time.TimeSeries;  
 import org.jfree.data.time.TimeSeriesCollection;  
 import org.jfree.data.xy.XYDataset; 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import java.net.URL;
 
 public class Main
@@ -233,7 +235,7 @@ class Market implements ActionListener
         
         btc.setBounds(0,0,tabbedpaneDim.width,tabbedpaneDim.height);
         btc.setLayout(null);
-        databtc = createDataSet("btc");
+        databtc = DataSetGen.createDataSet("btc");
         chartbtc = ChartFactory.createTimeSeriesChart("Bitcoin","Timeline","Value",databtc);
         chpanelbtc = new ChartPanel(chartbtc);
         XYPlot plotbtc = (XYPlot)chartbtc.getPlot();
@@ -243,7 +245,7 @@ class Market implements ActionListener
 
         doge.setBounds(0,0,tabbedpaneDim.width,tabbedpaneDim.height);
         doge.setLayout(null);
-        datadoge = createDataSet("doge");
+        datadoge = DataSetGen.createDataSet("doge");
         chartdoge = ChartFactory.createTimeSeriesChart("Dogecoin","Timeline","Value",datadoge);
         chpaneldoge = new ChartPanel(chartdoge);
         XYPlot plotdoge = (XYPlot)chartdoge.getPlot();
@@ -253,7 +255,7 @@ class Market implements ActionListener
 
         eth.setBounds(0,0,tabbedpaneDim.width,tabbedpaneDim.height);
         eth.setLayout(null);
-        dataeth = createDataSet("eth");
+        dataeth = DataSetGen.createDataSet("eth");
         charteth = ChartFactory.createTimeSeriesChart("Ethereum","Timeline","Value",dataeth);
         chpaneleth = new ChartPanel(charteth);
         XYPlot ploteth = (XYPlot)charteth.getPlot();
@@ -269,71 +271,6 @@ class Market implements ActionListener
                 
         market.add(back);//adding buttons
         market.add(tab);//adding tabs    
-    }
-
-    public XYDataset createDataSet(String s)
-    {
-        TimeSeriesCollection dataset = new TimeSeriesCollection();
-        TimeSeries series = new TimeSeries(s);
-
-        if(s.equals("btc"))
-        {
-            series.add(new Day(1, 1, 2017), 50);  
-            series.add(new Day(2, 1, 2017), 40);  
-            series.add(new Day(3, 1, 2017), 45);  
-            series.add(new Day(4, 1, 2017), 30);  
-            series.add(new Day(5, 1, 2017), 50);  
-            series.add(new Day(6, 1, 2017), 45);  
-            series.add(new Day(7, 1, 2017), 60);  
-            series.add(new Day(8, 1, 2017), 45);  
-            series.add(new Day(9, 1, 2017), 55);  
-            series.add(new Day(10, 1, 2017), 48);  
-            series.add(new Day(11, 1, 2017), 60);  
-            series.add(new Day(12, 1, 2017), 45);  
-            series.add(new Day(13, 1, 2017), 65);  
-            series.add(new Day(14, 1, 2017), 45);  
-            series.add(new Day(15, 1, 2017), 55);
-        }
-        else if(s.equals("doge"))
-        {
-            series.add(new Day(1, 1, 2017), 50);  
-            series.add(new Day(2, 1, 2017), 40);  
-            series.add(new Day(3, 1, 2017), 45);  
-            series.add(new Day(4, 1, 2017), 30);  
-            series.add(new Day(5, 1, 2017), 50);  
-            series.add(new Day(6, 1, 2017), 45);  
-            series.add(new Day(7, 1, 2017), 60);  
-            series.add(new Day(8, 1, 2017), 45);  
-            series.add(new Day(9, 1, 2017), 55);  
-            series.add(new Day(10, 1, 2017), 48);  
-            series.add(new Day(11, 1, 2017), 60);  
-            series.add(new Day(12, 1, 2017), 45);  
-            series.add(new Day(13, 1, 2017), 65);  
-            series.add(new Day(14, 1, 2017), 45);  
-            series.add(new Day(15, 1, 2017), 55);
-        }
-        else if(s.equals("eth"))
-        {
-            series.add(new Day(1, 1, 2017), 50);  
-            series.add(new Day(2, 1, 2017), 40);  
-            series.add(new Day(3, 1, 2017), 45);  
-            series.add(new Day(4, 1, 2017), 30);  
-            series.add(new Day(5, 1, 2017), 50);  
-            series.add(new Day(6, 1, 2017), 45);  
-            series.add(new Day(7, 1, 2017), 60);  
-            series.add(new Day(8, 1, 2017), 45);  
-            series.add(new Day(9, 1, 2017), 55);  
-            series.add(new Day(10, 1, 2017), 48);  
-            series.add(new Day(11, 1, 2017), 60);  
-            series.add(new Day(12, 1, 2017), 45);  
-            series.add(new Day(13, 1, 2017), 65);  
-            series.add(new Day(14, 1, 2017), 45);  
-            series.add(new Day(15, 1, 2017), 55);
-        }
-
-        dataset.addSeries(series);
-
-        return dataset;
     }
 
     public void actionPerformed(ActionEvent ae)
