@@ -202,14 +202,18 @@ class Market implements ActionListener
     JPanel panel;
     ImageIcon frameIcon;
     JButton back;
+    JButton refresh;
+    Rectangle marketDim;
+    Rectangle tabbedpaneDim;
 
     Market(JFrame homepage)
     {
         homepage_m = homepage;//original homepage object(JFrame)
         market = new JFrame("Pop and Block");
-        frameIcon = new ImageIcon("../assets/icon.png");        
-        back = new JButton("back");//respective buttons with the titles
+        frameIcon = new ImageIcon("../assets/icon.png");
         tab = new JTabbedPane();
+        back = new JButton("back");//respective buttons with the titles
+        refresh = new JButton("refresh");
 
         market.setSize(1280,1024);
         market.setIconImage(frameIcon.getImage());
@@ -220,30 +224,41 @@ class Market implements ActionListener
         market.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //close the page on pressing the close button terminates the program if its the only window
 
-        Rectangle marketDim = market.getBounds();
+        marketDim = market.getBounds();
 
-        tab.setBounds(35,70,marketDim.width - 70,marketDim.height - 140);
-        Rectangle tabbedpaneDim = tab.getBounds();
+        tab.setBounds(35,70,marketDim.width - 70,marketDim.height - 200);
+        tabbedpaneDim = tab.getBounds();
 
-        panel = new JPanel();
-        TabGen obj = new TabGen(); 
-        String json = APIc.getMarketJSONData();
-        JSONArray markets = JSONReader.getJSONarray("res.json");
-        for(int i = 0 ; i < markets.length() ; i++)
-        {
-            panel = obj.tabGenerator(markets.get(i).toString(),tabbedpaneDim,json);
-            tab.add(markets.get(i).toString().substring(0,markets.get(i).toString().length()-3).toUpperCase(),panel);
-        }        
+        generateTabbedPanes();
+
         tab.setBackground(Color.decode("#FFCDAD"));
 
         back.setBounds(10,10,120,40);//top left button
         back.setBackground(Color.decode("#F85E00"));
         back.addActionListener(this);
-                
+        
+        refresh.setBounds(marketDim.width - 130,10,120,40);//top right button
+        refresh.setBackground(Color.decode("#F85E00"));
+        refresh.addActionListener(this);
+
         market.add(back);//adding buttons
-        market.add(tab);//adding tabs
+        market.add(refresh);
     }
 
+    public void generateTabbedPanes()
+    {
+        panel = new JPanel();
+        TabGen obj = new TabGen(); 
+        String json = APIc.getMarketJSONData();
+        JSONArray markets = JSONReader.getJSONarray("res.json");
+
+        for(int i = 0 ; i < markets.length() ; i++)
+        {
+            panel = obj.tabGenerator(markets.get(i).toString(),tabbedpaneDim,json);
+            tab.add(markets.get(i).toString().substring(0,markets.get(i).toString().length()-3).toUpperCase(),panel);
+        }
+        market.add(tab);
+    }
     public void actionPerformed(ActionEvent ae)
     {
         try
@@ -252,6 +267,14 @@ class Market implements ActionListener
             {
                 homepage_m.setVisible(true);//passed homepage object set back to visible
                 market.dispose();
+            }
+            if(ae.getSource() == refresh)
+            {
+                tab.removeAll();
+                market.remove(tab);
+                generateTabbedPanes();
+                market.revalidate();
+                market.repaint();
             }
         }
         catch(Exception e)
