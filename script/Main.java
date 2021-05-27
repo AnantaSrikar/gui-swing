@@ -151,7 +151,7 @@ class Readme extends HTMLStringConversion implements ActionListener
         back = new JButton("back");//respective buttons with the titles
         readmetext = new JLabel();
 
-        readme.setSize(800,600);
+        readme.setSize(1280,800);
         readme.setIconImage(frameIcon.getImage());
         readme.getContentPane().setBackground(Color.decode("#122932"));//color set
         readme.setLayout(null);//no layout manager
