@@ -55,51 +55,33 @@ public class TabGen
         else
             dl_prediction = "Sell";
 
-        /*
-            Just do coin_data.get("index"); to get the data, eg, coin_data.get("volume") to get the volume
-
-            List of indices we need to show for every coin:
-                last
-                high
-                low
-                buy
-                sell
-                volume
-                at
-
-            Also plox show the output on the GUI of my cool deep learning algorithm prediction which is stored dl_prediction
-        */
-
-            LocalDateTime dateTime = LocalDateTime.ofEpochSecond(coin_data.getLong("at"), 0, ZoneOffset.UTC);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE,MMMM d,yyyy h:mm,a", Locale.ENGLISH);
-            String formattedDate = dateTime.format(formatter);
-
-            // You can take the date and time of the latest thing from formattedDate.
-            // System.out.println(formattedDate);
-
+        //time format conversion from epoch seconds to date and time
+        LocalDateTime dateTime = LocalDateTime.ofEpochSecond(coin_data.getLong("at"), 0, ZoneOffset.UTC);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE,MMMM d,yyyy h:mm,a", Locale.ENGLISH);
+        String formattedDate = dateTime.format(formatter);
         
-        last = new JLabel("Last: "+coin_data.get("last"));
-        high = new JLabel("High: "+coin_data.get("high"));
-        low = new JLabel("Low: "+coin_data.get("low"));
-        buy = new JLabel("Buy: "+coin_data.get("buy"));
-        sell = new JLabel("Sell: "+coin_data.get("sell"));
-        volume = new JLabel("Volume: "+coin_data.get("volume"));
-        at = new JLabel("At time(UTC): "+formattedDate);
-        prediction = new JLabel("Suggested course of action: "+dl_prediction);
+
+        //information labels
+        last = new JLabel("<html><p style = \"font-size:15;\">Last: "+coin_data.get("last")+"</p></html>");
+        high = new JLabel("<html><p style = \"font-size:15;\">High: "+coin_data.get("high")+"</p></html>");
+        low = new JLabel("<html><p style = \"font-size:15;\">Low: "+coin_data.get("low")+"</p></html>");
+        buy = new JLabel("<html><p style = \"font-size:15;\">Buy: "+coin_data.get("buy")+"</p></html>");
+        sell = new JLabel("<html><p style = \"font-size:15;\">Sell: "+coin_data.get("sell")+"</p></html>");
+        volume = new JLabel("<html><p style = \"font-size:15;\">Volume: "+coin_data.get("volume")+"</p></html>");
+        at = new JLabel("<html><p style = \"font-size:15;\">At time(UTC): "+formattedDate+"</p></html>");
+        prediction = new JLabel("<html><p style = \"font-size:20;\">Suggested course of action: "+dl_prediction+"</p></html>");
 
         at.setBounds(30 , tabbedpaneDim.height - 190 , tabbedpaneDim.width/2 , 40);
-        at.setHorizontalTextPosition(JLabel.CENTER);
-        at.setVerticalTextPosition(JLabel.BOTTOM);
 
         last.setBounds(30 , tabbedpaneDim.height - 140 , 150 , 40);
-        volume.setBounds(30 , tabbedpaneDim.height - 90, 150 , 40);
+        volume.setBounds(30 , tabbedpaneDim.height - 90, 180 , 40);
         high.setBounds(tabbedpaneDim.width/4  , tabbedpaneDim.height - 140, 150, 40);
         low.setBounds(tabbedpaneDim.width/4  , tabbedpaneDim.height - 90 , 150, 40);
         buy.setBounds(tabbedpaneDim.width/2 - 70 , tabbedpaneDim.height - 140 , 150 , 40);
         sell.setBounds(tabbedpaneDim.width/2 - 70, tabbedpaneDim.height - 90 , 150, 40);
 
-        prediction.setBounds(3*tabbedpaneDim.width/4 - 125 , tabbedpaneDim.height- 120 , 250 , 40);
-        prediction.setHorizontalTextPosition(JLabel.CENTER);
+        prediction.setBounds(3*tabbedpaneDim.width/4 - 175, tabbedpaneDim.height- 140 , 350 , 60);
+
         coin.add(at);
         coin.add(last);
         coin.add(volume);
