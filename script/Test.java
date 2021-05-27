@@ -1,5 +1,6 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.lang.Math;
 
 public class Test
 {
@@ -10,10 +11,14 @@ public class Test
     }
     public void run()
     {
-        JSONObject data = new JSONObject(APIc.getMarketJSONData());
-        JSONObject coin = data.getJSONObject("dogeinr");
-        JSONArray time = coin.getJSONArray("time");
-        JSONArray value = coin.getJSONArray("value");
-        System.out.println(Double.parseDouble(value.get(1).toString()));
+        coinname = "btcinr";
+        String live_market_data_string = APIw.getJSONEndPoint("tickers", "null");
+        JSONObject live_market_data = new JSONObject(live_market_data_string);
+        JSONObject coin_data = new JSONObject(live_market_data.get(coinname).toString());
+        
+        if(Math.random() > 0.5)
+            dl_prediction = "Buy";
+        else
+            dl_prediction = "Sell";
     }
 }
