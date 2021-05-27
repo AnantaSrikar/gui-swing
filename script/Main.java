@@ -1,3 +1,7 @@
+/*
+    TODO: Add a loading page
+*/
+
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -252,9 +256,12 @@ class Market implements ActionListener
         String json = APIc.getMarketJSONData();
         JSONArray markets = JSONReader.getJSONarray("res.json");//array of coins
 
+        // Getting market data from backend
+        String live_market_data_string = APIw.getJSONEndPoint("tickers", "null");
+
         for(int i = 0 ; i < markets.length() ; i++)
         {
-            panel = obj.tabGenerator(markets.get(i).toString(),tabbedpaneDim,json);
+            panel = obj.tabGenerator(markets.get(i).toString(),tabbedpaneDim,json, live_market_data_string);
             tab.add(markets.get(i).toString().substring(0,markets.get(i).toString().length()-3).toUpperCase(),panel);//add tab to panel
         }
         market.add(tab);//add tabs to frame
