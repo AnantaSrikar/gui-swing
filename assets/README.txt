@@ -1,11 +1,33 @@
-So  hewe's  how it  wowks.
-The wowwd has a shit ton of cabwes.
-They'we aww undew the ocean ow on wand ow undew wand.
-Those cabwes cawwy peta-fucking-bytes of infowmation evewy singwe second.
-That's being shawed by you, the giww you have a cwush on but don't have the bawws to say you wike hew and hew cwush.
-When you say you'we paying fow a connection, you'we paying fow a tiny tap into the wesouwce that 10s of thousands of ewectwicaw, ewectwonics, computew science engineews and evewyone ewse have wowked on theiw entiwe wives.
-They devewoped awgowithms which you won't be capabwe of even undewstanding unwess you sit down fow houws.
-They evowved softwawe and hawdwawe and pushed technowogy to the wimits which you won't even know about.
-They wowked theiw asses off so you couwd type desi pown on pownhub and nut in 12 seconds.
-That wesouwce is shawed. Just because you pay fow it, doesn't mean it's youws to abuse.
-Keep the gwobaw twaffic wow.
+Welcome to Pop and Block!
+
+Developed by epoch101, wonder_coconut and Sanjana
+
+Here's the basic outline and instructions on how to operate the application
+
+The application opens in the HomePage, containing three buttons listed:
+-README (which you already pressed to get here)
+-Market
+-Source Code
+
+The Market button gets you to the main chart page, displaying the latest trends in the cryptocurrency markets.
+The Source Code button will redirect you to the Github Organization webpage, where all the source code for this application can be found.
+
+Market Page:
+
+	Each coin/crypto market can be accessed by the tabbed panes, each tab marked with it's respective crypto coin
+	The panel shows a bunch of simple information, such as value 
+		-Trends over time(last 50 transactions)
+		-Highest value(24h)
+		-Low value(24h)
+		-Latest value(24h)
+		-Volume
+		-Buy and Sell value at that time
+	
+	The page also has a refresh button to regenerate and refresh up-to-date values of the market.
+	
+	Don't worry if the application charts takes time or freezes, that's completely normal.
+	It takes a bit of time for the API call and data acquisition.
+	
+Thanks for using our application, it's rudimentary as of now, but we've got bigger plans in the future.
+
+Live Long and HODL.
